@@ -1,5 +1,6 @@
 import express, { type ErrorRequestHandler } from 'express';
 import cors from 'cors';
+import { RequestError } from './request-error';
 export interface FailureMode {
   delayMs?: number;
   failRate?: number;
@@ -50,6 +51,10 @@ export function baseApp(name: string, mode: FailureMode = {}) {
 export function finishApp(app: ReturnType<typeof baseApp>) {
   app.use((_req, res) => res.status(404).json({ error: 'Not found.' }));
   const errors: ErrorRequestHandler = (error, _req, res, _next) => {
+    if (error instanceof RequestError) {
+      res.status(error.status).json({ error: error.message });
+      return;
+    }
     res.status(error instanceof URIError ? 400 : 500).json({
       error:
         error instanceof URIError

@@ -20,7 +20,7 @@
     "build": "node scripts/build.mjs",
     "preview": "node scripts/services.mjs preview",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test tests/bff.test.ts",
+    "test": "npm run test:unit && npm run test:integration",
     "test:e2e": "playwright test",
     "test:e2e:preview": "node scripts/test-preview.mjs",
     "check": "npm run typecheck && npm test && npm run build",
@@ -31,7 +31,11 @@
     "dev:insights:web": "node scripts/services.mjs dev insights web",
     "dev:insights:bff": "node --import tsx slices/insights/bff/index.ts",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test:unit": "tsx --test \"tests/unit/frontend/*.test.ts\" \"tests/unit/backend/*.test.ts\"",
+    "test:unit:frontend": "tsx --test \"tests/unit/frontend/*.test.ts\"",
+    "test:unit:backend": "tsx --test \"tests/unit/backend/*.test.ts\"",
+    "test:integration": "tsx --test tests/bff.test.ts"
   },
   "dependencies": {
     "cors": "2.8.6",

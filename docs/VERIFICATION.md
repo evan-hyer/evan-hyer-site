@@ -13,6 +13,18 @@ Verified locally on Windows with Node 24.12.0 and npm 11.6.2 on September 19, 20
 | Formatting                              | Prettier check passed                                                   |
 | Visual inspection                       | Desktop/mobile homepages, mobile project detail, desktop insight detail |
 
+## Business unit tests
+
+Added 39 unit tests: 20 frontend and 19 backend. All pass, alongside the 13 existing HTTP integration tests.
+
+Frontend tests cover route ownership and relative detail paths, invalid routes, ordinary versus modified clicks, the three-project summary limit, loading versus empty results, all slice response contracts, retry recovery, HTTP/network/schema errors, request cancellation, deterministic deadlines, and remote-owned runtime configuration.
+
+Backend tests cover case-insensitive literal search across allowed fields, search/tag intersections, exact topic matching, editorial order, filter boundaries and invalid types, missing versus malformed detail requests, fixture immutability, demonstration labels, article reading times, and profile URL validation.
+
+These tests exercise production rule modules without Express listeners, a DOM, or browser processes. Rendering and framework integration remain covered by Playwright. No new dependencies were needed.
+
+## Browser coverage
+
 The browser tests cover:
 
 - Concurrent React 19.3.0, React 18.3.1, and Vue 3.5.43 rendering using imported framework versions.

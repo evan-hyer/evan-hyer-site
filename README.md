@@ -25,23 +25,29 @@ All listeners bind to the loopback address. No Docker, hosts-file changes, accou
 
 ## Commands
 
-| Command                           | Purpose                                                                                |
-| --------------------------------- | -------------------------------------------------------------------------------------- |
-| `npm run dev`                     | All seven services                                                                     |
-| `npm run dev:shell`               | Shell frontend                                                                         |
-| `npm run dev:profile`             | Profile frontend and BFF                                                               |
-| `npm run dev:projects`            | Projects frontend and BFF                                                              |
-| `npm run dev:insights`            | Insights frontend and BFF                                                              |
-| `npm run dev:projects:web`        | Only Projects frontend; also available for Profile and Insights                        |
-| `npm run dev:projects:bff`        | Only Projects BFF; also available for Profile and Insights                             |
-| `npm run typecheck`               | Strict TypeScript check across applications, contracts, and tests                      |
-| `npm test`                        | Fixture contracts, API filtering, detail lookup, invalid requests, delay/failure tests |
-| `npm run build`                   | Four independent production frontend outputs                                           |
-| `npm run build -w @site/projects` | Build only Projects; other frontend workspace names work too                           |
-| `npm run preview`                 | Four static production previews plus the three BFFs                                    |
-| `npm run test:e2e`                | Playwright suite against automatically started development services                    |
-| `npm run test:e2e:preview`        | Same suite against production outputs; run build first                                 |
-| `npm run check`                   | Type check, API tests, and production build                                            |
+| Command                           | Purpose                                                                    |
+| --------------------------------- | -------------------------------------------------------------------------- |
+| `npm run dev`                     | All seven services                                                         |
+| `npm run dev:shell`               | Shell frontend                                                             |
+| `npm run dev:profile`             | Profile frontend and BFF                                                   |
+| `npm run dev:projects`            | Projects frontend and BFF                                                  |
+| `npm run dev:insights`            | Insights frontend and BFF                                                  |
+| `npm run dev:projects:web`        | Only Projects frontend; also available for Profile and Insights            |
+| `npm run dev:projects:bff`        | Only Projects BFF; also available for Profile and Insights                 |
+| `npm run typecheck`               | Strict TypeScript check across applications, contracts, and tests          |
+| `npm test`                        | All unit tests followed by HTTP integration tests                          |
+| `npm run test:unit`               | Frontend and backend business unit tests; no servers or browser            |
+| `npm run test:unit:frontend`      | Routing, navigation, summaries, requests, cancellation, and error handling |
+| `npm run test:unit:backend`       | Catalog filtering, validation, detail lookup, and response contracts       |
+| `npm run test:integration`        | Existing HTTP endpoint, CORS, health, delay, and failure tests             |
+| `npm run build`                   | Four independent production frontend outputs                               |
+| `npm run build -w @site/projects` | Build only Projects; other frontend workspace names work too               |
+| `npm run preview`                 | Four static production previews plus the three BFFs                        |
+| `npm run test:e2e`                | Playwright suite against automatically started development services        |
+| `npm run test:e2e:preview`        | Same suite against production outputs; run build first                     |
+| `npm run check`                   | Type check, unit/integration tests, and production build                   |
+
+Unit tests live in `tests/unit/frontend` and `tests/unit/backend`. They use Node’s built-in test runner and synthetic catalogs. Frontend fetches and request deadlines are mocked, so unit tests need no network, open ports, browser, or real-time timeout waits. Backend services accept a catalog argument and run independently of Express. The production UI and HTTP adapters call the same tested functions.
 
 Before browser tests, install Chromium once:
 

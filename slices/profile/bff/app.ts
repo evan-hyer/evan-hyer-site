@@ -1,19 +1,15 @@
-import { z } from 'zod';
 import {
   baseApp,
   finishApp,
   type FailureMode,
 } from '../../../packages/server/src/index';
 import { profile } from '../data/profile';
-import { Profile } from '../contracts/index';
+import { getProfile } from './service';
 export function createApp(mode?: FailureMode) {
   const app = baseApp('profile', mode);
   app.get('/api/profile', (req, res) => {
-    if (!z.object({}).strict().safeParse(req.query).success) {
-      res.status(400).json({ error: 'Unsupported query parameter.' });
-      return;
-    }
-    res.json(Profile.parse(profile));
+    res.json(getProfile(profile, req.query));
   });
+
   return finishApp(app);
 }

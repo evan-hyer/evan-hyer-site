@@ -13,6 +13,7 @@ import {
   type SliceName,
 } from '@site/contract';
 import { Button, Link, State } from '@site/ui';
+import { resolveRoute } from './routing';
 import '../../../packages/tokens/reset.css';
 import '../../../packages/tokens/theme.css';
 const names: SliceName[] = ['profile', 'projects', 'insights'];
@@ -164,10 +165,7 @@ function App() {
     addEventListener('popstate', pop);
     return () => removeEventListener('popstate', pop);
   }, []);
-  const match = route.match(/^\/(profile|projects|insights)(\/[^/]+)?\/?$/);
-  const current = match?.[1] as SliceName | undefined;
-  const isHome = route === '/';
-  const valid = isHome || (current && (current !== 'profile' || !match?.[2]));
+  const { current, isHome, valid, relativeRoute } = resolveRoute(route);
   useEffect(() => {
     document.title = isHome
       ? 'Evan Hyer — Thoughtful work. Connected ideas.'
@@ -225,7 +223,7 @@ function App() {
               key={name + route}
               name={name}
               config={config}
-              route={isHome ? '/' : match?.[2] || '/'}
+              route={relativeRoute}
               mode={isHome ? 'summary' : 'full'}
               navigate={navigate}
               report={report}

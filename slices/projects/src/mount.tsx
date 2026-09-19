@@ -8,6 +8,7 @@ import {
   type ProjectData,
 } from '../contracts/index';
 import './style.css';
+import { visibleProjects } from './presentation';
 export const metadata = { framework: 'React', version };
 const base = __webpack_public_path__;
 const roots = new WeakMap<HTMLElement, Root>();
@@ -92,7 +93,7 @@ function List({ options }: { options: MountOptions }) {
   );
   const summary = options.mode === 'summary';
   const ProjectTitle = summary ? 'h3' : 'h2';
-  const projects = summary ? state.data?.slice(0, 3) : state.data;
+  const projects = visibleProjects(state.data, options.mode);
   return (
     <section className="eh-section" aria-label="Projects">
       <Heading
