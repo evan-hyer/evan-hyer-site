@@ -1,0 +1,17 @@
+{
+  "name": "@site/insights",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node ../../scripts/services.mjs dev insights",
+    "build": "node ../../scripts/build.mjs insights"
+  },
+  "dependencies": {
+    "vue": "3.5.43",
+    "@site/contract": "1.0.0",
+    "@site/server": "1.0.0",
+    "@site/tokens": "1.0.0",
+    "zod": "4.6.5"
+  }
+}

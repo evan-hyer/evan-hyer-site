@@ -1,0 +1,7 @@
+{
+  "remotes": {
+    "profile": "http://localhost:3001/mf-manifest.json",
+    "projects": "http://localhost:3002/mf-manifest.json",
+    "insights": "http://localhost:3003/mf-manifest.json"
+  }
+}

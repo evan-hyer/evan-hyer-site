@@ -1,0 +1,17 @@
+{
+  "name": "@site/shell",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node ../../scripts/services.mjs dev shell",
+    "build": "node ../../scripts/build.mjs shell"
+  },
+  "dependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "@site/contract": "1.0.0",
+    "@site/ui": "1.0.0",
+    "@site/tokens": "1.0.0"
+  }
+}
