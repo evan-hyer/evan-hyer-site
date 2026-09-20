@@ -15,7 +15,10 @@ function project(slug: string, overrides: Partial<ProjectData>): ProjectData {
     challenge: 'A question',
     approach: ['One step'],
     outcome: 'An observation',
-    demo: true,
+    demo: false,
+    repositoryUrl: 'https://github.com/evan-hyer/' + slug,
+    sourceUrl: 'https://github.com/evan-hyer/' + slug + '/blob/main/README.md',
+    sourceChecked: '2026-09-19',
     ...overrides,
   };
 }

@@ -25,7 +25,7 @@ for (const [name, port, title] of [
       const slot = page.locator('[data-slice="' + name + '"]');
       await expect(slot.getByRole('alert')).toBeVisible();
       await expect(
-        page.getByRole('heading', { name: 'Common Ground', exact: true }),
+        page.getByRole('heading', { name: 'Track Changes', exact: true }),
       ).toBeVisible();
       await page.unroute('http://localhost:' + port + '/**');
       await slot.getByRole('button', { name: 'Try again' }).click();
@@ -44,7 +44,7 @@ test('dedicated routes load only their own remote and BFF', async ({
   });
   await page.goto('/projects');
   await expect(
-    page.getByRole('heading', { name: 'Common Ground', exact: true }),
+    page.getByRole('heading', { name: 'Track Changes', exact: true }),
   ).toBeVisible();
   expect(ports.has('3002')).toBe(true);
   expect(ports.has('4002')).toBe(true);
@@ -61,7 +61,7 @@ test('React scopes remain separate and mounting the same container is idempotent
   });
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { name: 'Common Ground', exact: true }),
+    page.getByRole('heading', { name: 'Track Changes', exact: true }),
   ).toBeVisible();
   await expect(
     page.getByRole('heading', {
@@ -113,7 +113,7 @@ test('React scopes remain separate and mounting the same container is idempotent
   for (const name of ['profile', 'projects', 'insights'])
     await expect(dock.getByTestId(name + '-content')).toHaveCount(1);
   await expect(
-    dock.getByRole('heading', { name: 'Common Ground', exact: true }),
+    dock.getByRole('heading', { name: 'Track Changes', exact: true }),
   ).toBeVisible();
   await expect(
     dock.getByRole('heading', {
@@ -138,7 +138,7 @@ test('shell configuration failure has a working retry', async ({ page }) => {
   await page.unroute('http://localhost:3000/runtime-config.json');
   await page.getByRole('button', { name: 'Try again' }).click();
   await expect(
-    page.getByRole('heading', { name: 'Common Ground', exact: true }),
+    page.getByRole('heading', { name: 'Track Changes', exact: true }),
   ).toBeVisible();
 });
 test('standalone configuration failure recovers and cross-slice links use the shell', async ({
@@ -156,6 +156,6 @@ test('standalone configuration failure recovers and cross-slice links use the sh
   await page.getByRole('link', { name: 'Explore projects' }).click();
   await expect(page).toHaveURL('http://localhost:3000/projects');
   await expect(
-    page.getByRole('heading', { name: 'Common Ground', exact: true }),
+    page.getByRole('heading', { name: 'Track Changes', exact: true }),
   ).toBeVisible();
 });

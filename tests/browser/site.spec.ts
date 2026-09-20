@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 const loaded = async (page: Page) => {
   await expect(page.getByTestId('profile-content')).toBeVisible();
   await expect(
-    page.getByRole('heading', { name: 'Common Ground', exact: true }),
+    page.getByRole('heading', { name: 'Track Changes', exact: true }),
   ).toBeVisible();
   await expect(
     page.getByRole('heading', {
@@ -52,24 +52,35 @@ test('project search, filters, details, browser history and refresh', async ({
 }) => {
   await page.goto('/projects');
   await expect(
-    page.getByRole('heading', { name: 'Common Ground', exact: true }),
+    page.getByRole('heading', { name: 'Track Changes', exact: true }),
   ).toBeVisible();
-  await page.getByLabel('Search projects', { exact: true }).fill('signals');
+  await page.getByLabel('Search projects', { exact: true }).fill('svelte');
   await expect(
-    page.getByRole('heading', { name: 'Small Signals', exact: true }),
+    page.getByRole('heading', { name: 'Svelte Web Component', exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByRole('heading', { name: 'Common Ground', exact: true }),
+    page.getByRole('heading', { name: 'Track Changes', exact: true }),
   ).toHaveCount(0);
   await page.getByLabel('Search projects', { exact: true }).fill('');
-  await page.getByRole('button', { name: 'Product', exact: true }).click();
-  await expect(page.getByRole('status')).toHaveText('2 projects');
-  await page.getByRole('heading', { name: 'Field Notes', exact: true }).click();
-  await expect(page).toHaveURL(/\/projects\/field-notes$/);
+  await page.getByRole('button', { name: 'Salesforce', exact: true }).click();
+  await expect(page.getByRole('status')).toHaveText('3 projects');
+  await page
+    .getByRole('heading', { name: 'LWC Observer Patterns', exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/projects\/lwc-observer-patterns$/);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-    'Field Notes',
+    'LWC Observer Patterns',
   );
   await page.reload();
+  await expect(
+    page.getByRole('link', { name: 'View repository on GitHub' }),
+  ).toHaveAttribute('href', 'https://github.com/evan-hyer/LWC_ObserverPattern');
+  await expect(
+    page.getByRole('link', { name: 'Read the source README' }),
+  ).toHaveAttribute(
+    'href',
+    'https://github.com/evan-hyer/LWC_ObserverPattern/blob/main/README.md',
+  );
   await expect(
     page.getByRole('heading', { name: 'The question' }),
   ).toBeVisible();
@@ -79,7 +90,7 @@ test('project search, filters, details, browser history and refresh', async ({
   ).toBeVisible();
   await page.goForward();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-    'Field Notes',
+    'LWC Observer Patterns',
   );
 });
 test('insight topics and article routes', async ({ page }) => {
@@ -109,7 +120,7 @@ test('insight topics and article routes', async ({ page }) => {
 });
 for (const [name, port, heading] of [
   ['profile', 3001, 'Thoughtful work.'],
-  ['projects', 3002, 'Common Ground'],
+  ['projects', 3002, 'Track Changes'],
   ['insights', 3003, 'The space between components'],
 ] as const) {
   test(
@@ -157,12 +168,12 @@ test('an unavailable remote is isolated and retry recovers', async ({
     .getByRole('button', { name: 'Try again' })
     .click();
   await expect(
-    page.getByRole('heading', { name: 'Common Ground', exact: true }),
+    page.getByRole('heading', { name: 'Track Changes', exact: true }),
   ).toBeVisible();
 });
 for (const [name, port, title] of [
   ['profile', 4001, 'Thoughtful work.'],
-  ['projects', 4002, 'Common Ground'],
+  ['projects', 4002, 'Track Changes'],
   ['insights', 4003, 'The space between components'],
 ] as const) {
   test(
@@ -179,7 +190,7 @@ for (const [name, port, title] of [
       const slot = page.locator('[data-slice="' + name + '"]');
       await expect(slot.getByRole('alert')).toBeVisible();
       const other =
-        name === 'projects' ? 'The space between components' : 'Common Ground';
+        name === 'projects' ? 'The space between components' : 'Track Changes';
       await expect(
         page.getByRole('heading', { name: other, exact: true }),
       ).toBeVisible();
@@ -209,7 +220,7 @@ test('repeated mount/unmount cancels stale work without duplicate roots or hook 
     await expect(
       page.getByLabel('Search projects', { exact: true }),
     ).toBeVisible();
-    await page.getByLabel('Search projects', { exact: true }).fill('common');
+    await page.getByLabel('Search projects', { exact: true }).fill('track');
     await page
       .getByRole('navigation')
       .getByRole('link', { name: 'Insights', exact: true })
@@ -253,13 +264,13 @@ test('empty search and invalid routes are recoverable', async ({ page }) => {
   ).toBeVisible();
   await page.getByRole('button', { name: 'Clear filters' }).click();
   await expect(
-    page.getByRole('heading', { name: 'Common Ground', exact: true }),
+    page.getByRole('heading', { name: 'Track Changes', exact: true }),
   ).toBeVisible();
   await page.goto('/projects/not-a-project');
   await expect(page.getByText('This page could not be found.')).toBeVisible();
   await page.getByRole('link', { name: '← All projects' }).click();
   await expect(
-    page.getByRole('heading', { name: 'Common Ground', exact: true }),
+    page.getByRole('heading', { name: 'Track Changes', exact: true }),
   ).toBeVisible();
   await page.goto('/does-not-exist');
   await expect(

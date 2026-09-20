@@ -20,7 +20,7 @@
     "build": "node scripts/build.mjs",
     "preview": "node scripts/services.mjs preview",
     "typecheck": "tsc --noEmit",
-    "test": "npm run test:unit && npm run test:integration",
+    "test": "npm run test:unit && npm run test:integration && npm run test:lambda && npm run test:infra",
     "test:e2e": "playwright test",
     "test:e2e:preview": "node scripts/test-preview.mjs",
     "check": "npm run typecheck && npm test && npm run build",
@@ -35,9 +35,16 @@
     "test:unit": "tsx --test \"tests/unit/frontend/*.test.ts\" \"tests/unit/backend/*.test.ts\"",
     "test:unit:frontend": "tsx --test \"tests/unit/frontend/*.test.ts\"",
     "test:unit:backend": "tsx --test \"tests/unit/backend/*.test.ts\"",
-    "test:integration": "tsx --test tests/bff.test.ts"
+    "test:integration": "tsx --test tests/bff.test.ts",
+    "infra:synth": "cdk synth --quiet",
+    "infra:diff": "cdk diff EvanHyerSite",
+    "infra:deploy": "cdk deploy EvanHyerSite --outputs-file cdk-outputs.json",
+    "test:infra": "tsx --test tests/infra/*.test.ts",
+    "test:lambda": "tsx --test tests/lambda.test.ts",
+    "test:coverage": "node --import tsx --test --experimental-test-coverage --test-coverage-lines=90 --test-coverage-branches=95 --test-coverage-functions=95 --test-coverage-include=\"slices/*/bff/service.ts\" --test-coverage-include=\"slices/*/contracts/index.ts\" --test-coverage-include=\"slices/projects/src/presentation.ts\" --test-coverage-include=\"apps/shell/src/routing.ts\" --test-coverage-include=\"packages/contract/src/index.ts\" \"tests/unit/frontend/*.test.ts\" \"tests/unit/backend/*.test.ts\""
   },
   "dependencies": {
+    "@codegenie/serverless-express": "5.0.0",
     "cors": "2.8.6",
     "express": "5.2.1",
     "zod": "4.6.5"
@@ -56,7 +63,11 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@types/supertest": "7.2.1",
+    "aws-cdk": "2.1142.0",
+    "aws-cdk-lib": "2.270.0",
+    "constructs": "10.8.1",
     "css-loader": "7.1.5",
+    "esbuild": "0.28.2",
     "postcss": "8.5.28",
     "postcss-loader": "8.2.1",
     "prettier": "3.9.8",

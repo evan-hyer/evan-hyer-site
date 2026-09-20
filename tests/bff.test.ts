@@ -63,24 +63,24 @@ test('projects: search is case-insensitive, tags combine with search, and empty 
   assert.equal(all.body.length, 4);
   const search = await request(app)
     .get('/api/projects')
-    .query({ search: 'COMMON' })
+    .query({ search: 'TRACK' })
     .expect(200);
-  assert.equal(search.body[0].slug, 'common-ground');
+  assert.equal(search.body[0].slug, 'track-changes');
   assert.equal(search.body.length, 1);
   const tag = await request(app)
     .get('/api/projects')
-    .query({ tag: 'Product' })
+    .query({ tag: 'TypeScript' })
     .expect(200);
   assert.equal(tag.body.length, 2);
   assert.ok(
-    tag.body.every((p: { tags: string[] }) => p.tags.includes('Product')),
+    tag.body.every((p: { tags: string[] }) => p.tags.includes('TypeScript')),
   );
   const combined = await request(app)
     .get('/api/projects')
-    .query({ tag: 'Product', search: 'signals' })
+    .query({ tag: 'TypeScript', search: 'svelte' })
     .expect(200);
   assert.equal(combined.body.length, 1);
-  assert.equal(combined.body[0].slug, 'small-signals');
+  assert.equal(combined.body[0].slug, 'svelte-web-component');
   assert.deepEqual(
     (await request(app).get('/api/projects?search=nonexistent').expect(200))
       .body,
@@ -95,12 +95,12 @@ test('projects: search is case-insensitive, tags combine with search, and empty 
 test('projects: detail lookup, missing, malformed requests', async () => {
   const app = projectsApp();
   Project.parse(
-    (await request(app).get('/api/projects/common-ground').expect(200)).body,
+    (await request(app).get('/api/projects/track-changes').expect(200)).body,
   );
   await request(app).get('/api/projects/not-here').expect(404);
   await request(app).get('/api/projects/INVALID').expect(400);
   await request(app).get('/api/projects/%ZZ').expect(400);
-  await request(app).get('/api/projects/common-ground?bad=1').expect(400);
+  await request(app).get('/api/projects/track-changes?bad=1').expect(400);
 });
 test('insights: filter, detail, invalid and missing requests', async () => {
   const app = insightsApp();
@@ -130,7 +130,7 @@ test('insights: filter, detail, invalid and missing requests', async () => {
   await request(app).get('/api/insights/missing').expect(404);
   await request(app).get('/api/insights/BAD').expect(400);
 });
-test('fixtures explicitly label demo content and reject malformed contracts', async () => {
+test('fixtures distinguish public projects from demonstration articles and reject malformed contracts', async () => {
   for (const [app, schema] of [
     [projectsApp(), Projects],
     [insightsApp(), Insights],
@@ -140,7 +140,9 @@ test('fixtures explicitly label demo content and reject malformed contracts', as
       .get('/api/' + endpoint)
       .expect(200);
     assert.ok(
-      result.body.every((item: { demo: boolean }) => item.demo === true),
+      result.body.every(
+        (item: { demo: boolean }) => item.demo === (schema === Insights),
+      ),
     );
     assert.equal(schema.safeParse([{ slug: 1 }]).success, false);
   }

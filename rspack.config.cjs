@@ -104,7 +104,10 @@ module.exports = (_, argv) => ({
     }),
     new ModuleFederationPlugin({
       name: 'eh_' + name,
-      filename: 'remoteEntry.js',
+      filename:
+        argv.mode === 'production'
+          ? 'remoteEntry.[contenthash].js'
+          : 'remoteEntry.js',
       manifest: true,
       dts: false,
       shareStrategy: 'loaded-first',

@@ -7,7 +7,7 @@ export const profile: ProfileData = {
   linkedin: 'https://www.linkedin.com/in/evan-hyer',
   about: [
     'Welcome. This is a small corner of the internet for exploring how ideas become digital experiences.',
-    'The projects and writing here are demonstrations: starting points for conversations about clear design, practical systems, and better ways of building.',
+    'The projects here come from my public GitHub repositories: Salesforce tools, component patterns, and frontend experiments. The writing section contains clearly labeled demonstration articles.',
     'For professional background and current experience, visit my public LinkedIn profile.',
   ],
   interests: [

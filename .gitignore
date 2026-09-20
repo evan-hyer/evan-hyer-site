@@ -5,3 +5,7 @@ playwright-report/
 test-results/
 *.log
 .env
+
+cdk.out
+cdk-outputs.json
+coverage

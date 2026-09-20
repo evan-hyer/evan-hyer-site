@@ -1,85 +1,103 @@
-import type { ProjectData } from '../contracts/index';
-export const projects: ProjectData[] = [
+import { Projects } from '../contracts/index';
+// Curated public repository snapshot. See docs/SOURCES.md for selection and provenance.
+export const projects = Projects.parse([
   {
-    slug: 'common-ground',
-    title: 'Common Ground',
-    category: 'Design systems',
+    slug: 'track-changes',
+    title: 'Track Changes',
+    category: 'Developer tooling',
     summary:
-      'A shared visual language. Room for every team to make it their own.',
-    tags: ['Design systems', 'Frontend'],
+      'A Salesforce CLI workflow for finding metadata changes and bringing them into Git.',
+    tags: ['Salesforce', 'CLI', 'TypeScript'],
     year: '2026',
     color: 'sage',
     kind: 'orbit',
-    demo: true,
     challenge:
-      'How can independent teams build a coherent experience without moving in lockstep?',
+      'Make Salesforce metadata changes discoverable from the terminal, with a path from inspection to retrieval and commit.',
     approach: [
-      'Start with a small vocabulary of colors, type, and spacing.',
-      'Share accessible component source while keeping product decisions close to each team.',
-      'Document the boundaries as carefully as the components.',
+      'Filter changes by user, date, component type, name, and target org.',
+      'Inspect results as a table, JSON, or HTML.',
+      'Select metadata, retrieve it, and use the documented commit workflows.',
     ],
     outcome:
-      'This fictional case study explores a design system that supports independent delivery. No client work or measured business results are claimed.',
+      'A public Salesforce CLI plugin. Features are described from its README; no adoption or performance claims are implied.',
+    demo: false,
+    repositoryUrl: 'https://github.com/evan-hyer/track-changes',
+    sourceUrl: 'https://github.com/evan-hyer/track-changes/blob/main/README.md',
+    sourceChecked: '2026-09-19',
   },
   {
-    slug: 'field-notes',
-    title: 'Field Notes',
-    category: 'Product exploration',
-    summary: 'A quieter place to capture the things worth coming back to.',
-    tags: ['Product', 'Frontend'],
-    year: '2026',
+    slug: 'lwc-observer-patterns',
+    title: 'LWC Observer Patterns',
+    category: 'Component architecture',
+    summary:
+      'Three ways to connect Lightning Web Components, with practical logging examples.',
+    tags: ['Salesforce', 'LWC', 'JavaScript'],
+    year: '2025',
     color: 'clay',
     kind: 'lines',
-    demo: true,
     challenge:
-      'Useful ideas often disappear into busy tools. What would a calmer collection experience look like?',
+      'Explore how Lightning Web Components can communicate across different relationships and scopes.',
     approach: [
-      'Make capture the smallest possible interaction.',
-      'Organize around topics instead of rigid folders.',
-      'Use generous space and readable type to help ideas breathe.',
+      'Compare Lightning Message Service with parent-child APIs and custom events.',
+      'Use a JavaScript observer service for publisher-subscriber communication.',
+      'Explore a logging utility with lightning/logger and a console fallback.',
     ],
     outcome:
-      'An illustrative product concept for a personal knowledge library. The interface is a demonstration, not a released product.',
+      "A learning and reference repository. The README documents Jest tests, but this portfolio does not claim to have independently validated that repository's test suite.",
+    demo: false,
+    repositoryUrl: 'https://github.com/evan-hyer/LWC_ObserverPattern',
+    sourceUrl:
+      'https://github.com/evan-hyer/LWC_ObserverPattern/blob/main/README.md',
+    sourceChecked: '2026-09-19',
   },
   {
-    slug: 'connected-pieces',
-    title: 'Connected Pieces',
-    category: 'System architecture',
+    slug: 'external-api-request',
+    title: 'External API Request',
+    category: 'Salesforce integration',
     summary:
-      'Independent applications, brought together in one considered experience.',
-    tags: ['Architecture', 'Frontend'],
-    year: '2026',
+      'A fluent Apex builder for assembling HTTP requests to external services.',
+    tags: ['Salesforce', 'Apex', 'Design patterns'],
+    year: '2023',
     color: 'blue',
     kind: 'blocks',
-    demo: true,
     challenge:
-      'Can applications evolve on their own while still feeling like parts of one whole?',
+      'Make the configuration of an Apex HTTP request explicit and readable at the call site.',
     approach: [
-      'Define a narrow, framework-neutral mounting contract.',
-      'Let each application own its data and rendering runtime.',
-      'Design loading and failure as local states instead of global interruptions.',
+      'Chain endpoint, method, header, and optional body configuration.',
+      'Build the HttpRequest through a nested builder.',
+      "Follow the repository's joke-retrieval example for a concrete callout.",
     ],
     outcome:
-      'A demonstration of modular frontend architecture. The principles are reflected in this site’s independently running sections.',
+      'An example of the Builder pattern in Apex. Review the repository before adopting the helper in a production integration.',
+    demo: false,
+    repositoryUrl: 'https://github.com/evan-hyer/ExternalAPIRequest',
+    sourceUrl:
+      'https://github.com/evan-hyer/ExternalAPIRequest/blob/main/README.md',
+    sourceChecked: '2026-09-19',
   },
   {
-    slug: 'small-signals',
-    title: 'Small Signals',
-    category: 'Data & interaction',
-    summary: 'Turning a wall of information into a few meaningful next steps.',
-    tags: ['Product', 'Data'],
-    year: '2025',
+    slug: 'svelte-web-component',
+    title: 'Svelte Web Component',
+    category: 'Frontend exploration',
+    summary:
+      'A Svelte and Vite experiment in packaging an interface as a standard web component.',
+    tags: ['Svelte', 'TypeScript', 'Web components'],
+    year: '2023',
     color: 'sand',
     kind: 'grid',
-    demo: true,
     challenge:
-      'Dashboards can overwhelm the people they are meant to help. Which signals deserve attention?',
+      'Explore embedding a declaratively built interface in a host page through a framework-neutral custom element.',
     approach: [
-      'Choose a small set of questions before drawing charts.',
-      'Group information around the decisions it supports.',
-      'Use accessible contrast and clear labels for every state.',
+      'Register an example-app custom element and mount Svelte into its shadow root.',
+      'Use a Vite library build to produce an IIFE JavaScript bundle.',
+      'Exercise the generated bundle in a separate HTML host page.',
     ],
     outcome:
-      'A fictional dashboard study that explores information hierarchy. All example concepts and outcomes are illustrative.',
+      'An exploratory implementation. Its README explicitly leaves shadow-root stylesheet handling as a TODO; it is not presented as a finished component library.',
+    demo: false,
+    repositoryUrl: 'https://github.com/evan-hyer/SvelteWebComponent',
+    sourceUrl:
+      'https://github.com/evan-hyer/SvelteWebComponent/blob/main/svelte-vite-webcomponent/README.md',
+    sourceChecked: '2026-09-19',
   },
-];
+]);

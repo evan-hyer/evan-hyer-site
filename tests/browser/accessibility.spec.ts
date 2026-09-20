@@ -9,8 +9,8 @@ for (const [name, width, height] of [
     await page.setViewportSize({ width, height });
     for (const [path, heading] of [
       ['/profile', 'Hello, I’m Evan Hyer.'],
-      ['/projects', 'Common Ground'],
-      ['/projects/common-ground', 'The takeaway'],
+      ['/projects', 'Track Changes'],
+      ['/projects/track-changes', 'Project notes'],
       ['/insights', 'The space between components'],
       ['/insights/small-contracts-strong-boundaries', 'Test the disagreement'],
     ]) {
@@ -26,7 +26,7 @@ for (const [name, width, height] of [
       const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations, path).toEqual([]);
       if (
-        path === '/projects/common-ground' ||
+        path === '/projects/track-changes' ||
         path === '/insights/small-contracts-strong-boundaries'
       ) {
         await page.screenshot({

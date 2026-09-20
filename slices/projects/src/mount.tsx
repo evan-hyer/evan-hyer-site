@@ -3,6 +3,7 @@ import { createRoot, type Root } from 'react-dom/client';
 import type { MountOptions } from '@site/contract';
 import { Badge, Card, Heading, Link, State, useData } from '@site/ui';
 import {
+  projectTags,
   parseProject,
   parseProjects,
   type ProjectData,
@@ -65,7 +66,14 @@ function Detail({ options, slug }: { options: MountOptions; slug: string }) {
         ))}
       </div>
       <Cover project={p} />
-      <p className="eh-demo">Demonstration project · fictional case study</p>
+      <p className="eh-demo">
+        Public GitHub project · Source reviewed {p.sourceChecked}
+      </p>
+      <p>
+        <a className="eh-text-link" href={p.repositoryUrl}>
+          View repository on GitHub ↗
+        </a>
+      </p>
       <h2>The question</h2>
       <p>{p.challenge}</p>
       <h2>The approach</h2>
@@ -74,8 +82,11 @@ function Detail({ options, slug }: { options: MountOptions; slug: string }) {
           <li key={a}>{a}</li>
         ))}
       </ul>
-      <h2>The takeaway</h2>
+      <h2>Project notes</h2>
       <p>{p.outcome}</p>
+      <a className="eh-text-link" href={p.sourceUrl}>
+        Read the source README ↗
+      </a>
     </article>
   );
 }
@@ -104,8 +115,8 @@ function List({ options }: { options: MountOptions }) {
         }
         subtitle={
           summary
-            ? 'Small experiments. Considered systems. A little curiosity at work.'
-            : 'Demonstration projects across design, engineering, and product.'
+            ? 'Salesforce tools, component patterns, and experiments from my GitHub.'
+            : 'A selection of my public repositories, with source links and implementation notes.'
         }
       >
         {summary && (
@@ -132,14 +143,7 @@ function List({ options }: { options: MountOptions }) {
             />
           </div>
           <div className="eh-filters" aria-label="Filter projects">
-            {[
-              '',
-              'Design systems',
-              'Frontend',
-              'Product',
-              'Architecture',
-              'Data',
-            ].map((t) => (
+            {['', ...projectTags].map((t) => (
               <button
                 className="eh-filter"
                 key={t}
@@ -197,7 +201,8 @@ function List({ options }: { options: MountOptions }) {
         </>
       )}
       <p className="eh-demo">
-        Explorations, not client work. All projects are demonstration content.
+        Selected public repositories. Descriptions reflect their source
+        documentation.
       </p>
     </section>
   );

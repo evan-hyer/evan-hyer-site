@@ -103,7 +103,7 @@ describe('frontend BFF response handling', () => {
   it('rejects malformed JSON and invalid fixture contracts without exposing schema internals', async (t) => {
     for (const body of [
       'not JSON',
-      JSON.stringify([{ ...projectCatalog[0], demo: false }]),
+      JSON.stringify([{ ...projectCatalog[0], demo: true }]),
       JSON.stringify([{ slug: 7 }]),
     ]) {
       const fetchMock = t.mock.method(

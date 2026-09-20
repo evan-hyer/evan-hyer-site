@@ -1,6 +1,6 @@
 # Evan Hyer’s personal website
 
-A client-rendered portfolio composed from three independent vertical slices. Each slice owns its UI, HTTP BFF, runtime schemas, and demonstration fixtures.
+A client-rendered portfolio composed from three independent vertical slices. Each slice owns its UI, HTTP BFF, runtime schemas, and curated fixture data.
 
 ## Run on Windows
 
@@ -57,7 +57,7 @@ npx playwright install chromium
 
 Stop any manually running services before starting an E2E suite: it reserves ports 3000–3003 and 4001–4003 and manages its own servers. Reports are written to `playwright-report/`, with failure traces and desktop/mobile screenshots in `test-results/`.
 
-The BFFs run TypeScript through Node’s `--import tsx` hook in both dev and preview. They are read-only fixture servers, not deployment infrastructure.
+The BFFs run TypeScript through Node’s `--import tsx` hook in both dev and preview. They are read-only fixture servers. AWS deployment bundles the same Express apps into Node 24 Lambda handlers.
 
 ## Configuration
 
@@ -99,7 +99,7 @@ For a manual resilience demonstration, run web and BFF commands in separate term
 Shell routes: `/`, `/profile`, `/projects`, `/projects/:slug`, `/insights`, and `/insights/:slug`. Unknown routes have a recovery link. Each standalone app supports its corresponding section and detail URLs, including direct refresh.
 
 - `GET /api/profile`
-- `GET /api/projects?search=signals&tag=Product`
+- `GET /api/projects?search=track&tag=CLI`
 - `GET /api/projects/:slug`
 - `GET /api/insights?topic=Engineering`
 - `GET /api/insights/:slug`
@@ -123,7 +123,7 @@ tests/                 HTTP contract tests and browser integration tests
 docs/                  Architecture, source notes, verification record
 ```
 
-Build outputs live in `apps/shell/dist` and `slices/{profile,projects,insights}/dist`. Every remote emits `mf-manifest.json` and `remoteEntry.js`.
+Build outputs live in `apps/shell/dist` and `slices/{profile,projects,insights}/dist`. Every remote emits `mf-manifest.json` and a remote entry. Production remote entries use content-hashed filenames for safe CDN caching.
 
 All installed versions are exact and recorded in `package-lock.json`; the UI peer dependency deliberately accepts both supported React majors. An `adm-zip: 0.6.1` override fixes an advisory in Module Federation’s transitive type-generation tooling. Federation-generated type downloads are disabled; the workspace owns the mount contract.
 
@@ -131,8 +131,14 @@ All installed versions are exact and recorded in `package-lock.json`; the UI pee
 
 The profile uses Evan Hyer’s name and the supplied public LinkedIn link. Career history and employer claims are intentionally absent because they were not verified. Introductory copy describes this portfolio; it is not a sourced professional biography.
 
-Projects and insights are visibly labeled **demonstration content**. Replace their slice-owned fixtures with approved real material before treating the site as a record of professional work. See [source notes](docs/SOURCES.md).
+Projects showcase four verified public GitHub repositories with source links. Insights remain visibly labeled **demonstration content**. See [source notes](docs/SOURCES.md).
 
 The architecture panel appears only in development. It reports actual imported framework versions, configured remote origins, and the state of each mounted slice’s BFF requests. It is excluded from the production interface.
 
-Authentication, CMS editing, persistence, contact submission, AWS infrastructure, and deployment are outside this version’s scope.
+AWS CDK and GitHub Actions deployment are included; see [AWS setup and operations](docs/AWS.md). Deployment stays disabled until the AWS account is bootstrapped and GitHub variables are configured. Authentication, CMS editing, persistence, and contact submission remain outside scope.
+
+## AWS and additional checks
+
+`npm run infra:synth` generates CloudFormation templates offline. `npm run test:lambda` tests real Lambda adapters; `npm run test:infra` checks infrastructure and release rules. `npm run test:coverage` enforces 90% lines, 95% branches, and 95% functions across the selected business modules (not whole-app rendering coverage). `npm test` includes unit, HTTP, Lambda, and infrastructure tests.
+
+The deployment workflow provides public CloudFront URLs backed by private S3, three Lambda HTTP APIs, OIDC authentication, budget notifications, artifact promotion, and post-deploy smoke checks. Read [AWS.md](docs/AWS.md) before the one-time bootstrap.

@@ -107,10 +107,10 @@ describe('project business rules', () => {
       status(400),
     );
   });
-  it('rejects invalid output and any record that drops its demonstration label', () => {
+  it('rejects invalid output and fictional records in the GitHub catalog', () => {
     const invalid = {
       ...projectCatalog[0],
-      demo: false,
+      demo: true,
     } as unknown as (typeof projectCatalog)[number];
     assert.throws(() => listProjects([invalid]), ZodError);
     assert.throws(() => getProject([invalid], 'alpha'), ZodError);
