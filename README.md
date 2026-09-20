@@ -139,6 +139,8 @@ AWS CDK and GitHub Actions deployment are included; see [AWS setup and operation
 
 ## AWS and additional checks
 
+Feature requirements, plans, acceptance scenarios, and task evidence are in the [specification index](specs/README.md). These are retrospective Spec Kit-style documents. See the [solo-maintainer workflow](docs/CONTRIBUTING.md) for PRs, merge settings, and the current GitHub-plan limitation on private branch enforcement.
+
 `npm run infra:synth` generates CloudFormation templates offline. `npm run test:lambda` tests real Lambda adapters; `npm run test:infra` checks infrastructure and release rules. `npm run test:coverage` enforces 90% lines, 95% branches, and 95% functions across the selected business modules (not whole-app rendering coverage). `npm test` includes unit, HTTP, Lambda, and infrastructure tests.
 
 The deployment workflow provides public CloudFront URLs backed by private S3, three Lambda HTTP APIs, OIDC authentication, budget notifications, artifact promotion, and post-deploy smoke checks. Read [AWS.md](docs/AWS.md) before the one-time bootstrap.
