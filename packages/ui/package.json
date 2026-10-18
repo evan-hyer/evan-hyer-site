@@ -6,7 +6,7 @@
   "exports": "./src/index.tsx",
   "peerDependencies": {
     "react": "^18.3.1 || ^19.0.0",
-    "react-dom": "^18.3.1 || ^19.0.0"
+    "react-dom": "19.3.1"
   },
   "dependencies": {
     "@site/contract": "1.0.0"
