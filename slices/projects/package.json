@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react-dom": "19.3.1",
     "@site/contract": "1.0.0",
     "@site/server": "1.0.0",
     "@site/tokens": "1.0.0",
